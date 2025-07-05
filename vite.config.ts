@@ -7,6 +7,10 @@ export default defineConfig({
   plugins: [
     react(),
     runtimeErrorOverlay(),
+    // Remove Replit-specific cartographer plugin for VS Code compatibility
+    ...process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined ? [
+      // Only load if in Replit environment
+    ] : []
   ],
   resolve: {
     alias: {
@@ -21,6 +25,8 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    host: "0.0.0.0",
+    port: 5173,
     fs: {
       strict: true,
       deny: ["**/.*"],
